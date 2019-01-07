@@ -32,6 +32,8 @@ class UserViewset(CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveMode
     serializer_class = UserRegisterSerializer
     queryset = User.objects.all()
     authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication)
+
+    #动态配置返回的用户信息
     def get_serializer_class(self):
         if self.action == "retrieve":
             return UserDetailSerializer
@@ -40,6 +42,7 @@ class UserViewset(CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveMode
         return UserDetailSerializer
 
     # permission_classes = (permissions.IsAuthenticated, )
+    #重载获取权限的函数，动态配置权限，注册不需要权限
     def get_permissions(self):
         if self.action == "retrieve":
             return [permissions.IsAuthenticated()]
@@ -67,10 +70,6 @@ class UserViewset(CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveMode
         return serializer.save()
 
 
-    def get_inof(self, request, token):
 
-        username = jwt_decode_handler(token)
-        print(username)
-        return Response(username, status=status.HTTP_200_OK)
 
 
