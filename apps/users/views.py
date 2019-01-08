@@ -17,11 +17,12 @@ from rest_framework import authentication
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from rest_framework_jwt.serializers import jwt_encode_handler, jwt_payload_handler
-
+from rest_framework.views import APIView
 
 from apps.users.serializers import UserRegisterSerializer, UserDetailSerializer
 from rest_framework_jwt.utils import jwt_decode_handler
 
+import json
 
 User = get_user_model()
 
@@ -68,8 +69,27 @@ class UserViewset(CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveMode
 
     def perform_create(self, serializer):
         return serializer.save()
-
-
-
-
-
+#
+#
+# class UserDetail(APIView):
+#
+#     def get_object(self, request, *args, **kwargs):
+#
+#         username = jwt_decode_handler(token)
+#
+#         try:
+#             return UserDetailSerializer.objects.get(username=username)
+#         except Exception as e:
+#             pass
+#
+#     def get(self, request, *args, **kwargs):
+#         username = jwt_decode_handler(token)
+#
+#         snippet = self.get_object(pk)
+#         serializer = SnippetSerializer(snippet)
+#         return Response(serializer.data)
+#
+#
+#
+#         serializer = self.get_serializer(instance)
+#         return Response(serializer.data)

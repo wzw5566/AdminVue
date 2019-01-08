@@ -29,7 +29,7 @@ from rest_framework_swagger.views import get_swagger_view
 router = DefaultRouter()
 router.register(r'api/users', UserViewset, base_name="users")
 schema_view = get_swagger_view(title='ShopVue API文档 ')
-
+# router.register(r'api/user/info', UserViewset, base_name="users")
 
 
 urlpatterns = [
@@ -38,5 +38,6 @@ urlpatterns = [
     url(r'^', include(router.urls)),
     path('apidoc/', schema_view),
     path('docs/', include_docs_urls(title='ShopVue 文档')),
+    #path('api/user/info/', UserDetail),
 
 ]
